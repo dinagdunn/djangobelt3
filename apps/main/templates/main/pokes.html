@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokes</title>
+    <style>
+        th, td, tr {border: 1px solid black;
+                    padding: 5px;
+                    }
+    </style>
+</head>
+<body> 
+
+    <h1>Welcome {{request.session.name}}!</h1><a href='/logout'>Logout</a>
+    <div class="mypokes">
+
+            {%for poke in mypokes%}
+        <h2>{{poke.poker.count}} people poked you</h2> 
+         
+            <br>
+           <p>{{poke.pokes.name}} poked you {{poke.pokes.count}} times.</p> 
+        {% endfor %}
+        <div>
+
+
+  <div class="pokes">  
+  <h2>People you may want to poke</h2>
+  <table>
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Alias</th>
+              <th>Email Address</th>
+              <th>Poke History</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+                    {% for user in allusers%}
+  <tr>
+      <td>{{user.name}}</td>
+      <td>{{user.alias}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.tot_pokes.count}} pokes</td>
+      <td>
+            <form action="/newpoke" method="post">
+                {% csrf_token %}
+                
+                <input type="hidden" name="poke_hist" value="1" id="pokeID"> 
+                    <input type="submit" value="Poke">
+            </form>
+        <!-- <td><a href="count/{{poke.id}}"><button>Poke!</button></a> -->
+      </td> 
+      {% endfor %}
+  </tr>
+</tbody>
+</table>
+</div>
+    
+    
+</body>
+</html>
